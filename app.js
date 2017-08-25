@@ -20,12 +20,16 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
 app.use('/users', users);
+var log = require('./libs/log')(module);
+require('./libs/mongoose');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
-  next(err);
+  log.debug('Not found URL: %s',req.url);
+  res.send({ error: 'Not found' });
+  return;
 });
 
 // error handler
@@ -36,7 +40,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  log.error('Internal error(%d): %s',res.statusCode,err.message);
+  res.send({ error: err.message });
+  return;
 });
 
 module.exports = app;
