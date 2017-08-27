@@ -1,23 +1,23 @@
-var oauth2orize = require('oauth2orize');
-var passport = require('passport');
-var crypto = require('crypto');
+import oauth2orize from 'oauth2orize';
+import passport from 'passport';
+import crypto from 'crypto';
 
-var User = require('../models/Users');
-var AccessToken = require('../models/Tokens');
-var RefreshToken = require('../models/Refreshtoken');
+const User = require('../models/Users');
+const AccessToken = require('../models/Tokens');
+const RefreshToken = require('../models/Refreshtoken');
 
 // create OAuth 2.0 server
-var aserver = oauth2orize.createServer();
+const aserver = oauth2orize.createServer();
 
 // Generic error handler
-var errFn = function (cb, err) {
+const errFn = (cb, err) => {
 	if (err) {
 		return cb(err);
 	}
 };
 
 // Destroys any old tokens and generates a new access and refresh token
-var generateTokens = function (data, done) {
+const generateTokens = (data, done) => {
 
 	// curries in `done` callback so we don't need to pass it
     var errorHandler = errFn.bind(undefined, done),
@@ -40,7 +40,7 @@ var generateTokens = function (data, done) {
 
     refreshToken.save(errorHandler);
 
-    token.save(function (err) {
+    token.save((err) => {
     	if (err) {
 			// log.error(err);
     		return done(err);
@@ -52,9 +52,9 @@ var generateTokens = function (data, done) {
 };
 
 // Exchange username & password for access token.
-aserver.exchange(oauth2orize.exchange.password(function(client, username, password, scope, done) {
+aserver.exchange(oauth2orize.exchange.password((client, username, password, scope, done) => {
 
-	User.findOne({ username: username }, function(err, user) {
+	User.findOne({ username: username }, (err, user) => {
 
 		if (err) {
 			return done(err);
@@ -64,7 +64,7 @@ aserver.exchange(oauth2orize.exchange.password(function(client, username, passwo
 			return done(null, false);
 		}
 
-		var model = {
+		let model = {
 			userId: user.userId,
 			clientId: client.clientId
 		};
@@ -75,9 +75,9 @@ aserver.exchange(oauth2orize.exchange.password(function(client, username, passwo
 }));
 
 // Exchange refreshToken for access token.
-aserver.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken, scope, done) {
+aserver.exchange(oauth2orize.exchange.refreshToken((client, refreshToken, scope, done) => {
 
-	RefreshToken.findOne({ token: refreshToken, clientId: client.clientId }, function(err, token) {
+	RefreshToken.findOne({ token: refreshToken, clientId: client.clientId }, (err, token) => {
 		if (err) {
 			return done(err);
 		}
@@ -86,11 +86,11 @@ aserver.exchange(oauth2orize.exchange.refreshToken(function(client, refreshToken
 			return done(null, false);
 		}
 
-		User.findById(token.userId, function(err, user) {
+		User.findById(token.userId, (err, user) => {
 			if (err) { return done(err); }
 			if (!user) { return done(null, false); }
 
-			var model = {
+			let model = {
 				userId: user.userId,
 				clientId: client.clientId
 			};

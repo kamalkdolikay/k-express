@@ -8,7 +8,7 @@ import passport from 'passport';
 
 //file imports
 require('./config/mongoose');
-require('./api/policies/auth');
+require('./api/policies/Auth');
 // var oauth2 = require('./api/policies/oauth2');
 const log = require('./config/log')(module);
 import routes from './config/routes';

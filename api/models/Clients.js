@@ -6,10 +6,10 @@
  * @email       :: kamaldolikay@gmail.com
  */
 
-var mongoose = require('mongoose'),
-	Schema = mongoose.Schema,
+const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
-	Clients = new Schema({
+const Clients = new Schema({
 		name: {
 			type: String,
 			unique: true,

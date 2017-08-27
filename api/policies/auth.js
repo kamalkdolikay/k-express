@@ -1,16 +1,16 @@
-var passport = require('passport');
-var BasicStrategy = require('passport-http').BasicStrategy;
-var ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
-var BearerStrategy = require('passport-http-bearer').Strategy;
+import passport from 'passport';
+const BasicStrategy = require('passport-http').BasicStrategy;
+const ClientPasswordStrategy = require('passport-oauth2-client-password').Strategy;
+const BearerStrategy = require('passport-http-bearer').Strategy;
 
-var User = require('../models/Users');
-var Client = require('../models/Clients');
-var AccessToken = require('../models/Tokens');
-var RefreshToken = require('../models/Refreshtoken');
+const User = require('../models/Users');
+const Client = require('../models/Clients');
+const AccessToken = require('../models/Tokens');
+const RefreshToken = require('../models/Refreshtoken');
 
 passport.use(new BasicStrategy(
-    function(username, password, done) {
-        Client.findOne({ clientId: username }, function(err, client) {
+    (username, password, done) => {
+        Client.findOne({ clientId: username }, (err, client) => {
             if (err) {
             	return done(err);
             }
@@ -29,8 +29,8 @@ passport.use(new BasicStrategy(
 ));
 
 passport.use(new ClientPasswordStrategy(
-    function(clientId, clientSecret, done) {
-        Client.findOne({ clientId: clientId }, function(err, client) {
+    (clientId, clientSecret, done) => {
+        Client.findOne({ clientId: clientId }, (err, client) => {
             if (err) {
             	return done(err);
             }
@@ -49,8 +49,8 @@ passport.use(new ClientPasswordStrategy(
 ));
 
 passport.use(new BearerStrategy(
-    function(accessToken, done) {
-        AccessToken.findOne({ token: accessToken }, function(err, token) {
+    (accessToken, done) => {
+        AccessToken.findOne({ token: accessToken }, (err, token) => {
 
             if (err) {
             	return done(err);
@@ -62,7 +62,7 @@ passport.use(new BearerStrategy(
 
             if( Math.round((Date.now()-token.created)/1000) > 3600 ) {
 
-                AccessToken.remove({ token: accessToken }, function (err) {
+                AccessToken.remove({ token: accessToken }, (err) => {
                     if (err) {
                     	return done(err);
                     }
@@ -71,7 +71,7 @@ passport.use(new BearerStrategy(
                 return done(null, false, { message: 'Token expired' });
             }
 
-            User.findById(token.userId, function(err, user) {
+            User.findById(token.userId, (err, user) => {
 
                 if (err) {
                 	return done(err);

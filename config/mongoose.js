@@ -1,13 +1,13 @@
-var mongoose    = require('mongoose');
-    mongoose.Promise = global.Promise;
-var log         = require('./log')(module);
-var connections = require('./connections');
-var Promise     = require('bluebird'),
-    promisify   = Promise.promisify;
+import mongoose from 'mongoose';
+import Promise from 'bluebird';
+mongoose.Promise = global.Promise;
+const promisify = Promise.promisify;
 
-mongoose.connection.openUri("mongodb://localhost/shop")
-    .then(function(){
-        log.info('Connected to DB!');
-    }).catch(function(error){
-        log.error(error);
-    });
+const log = require('./log')(module);
+const connections = require('./connections');
+
+mongoose.connection.openUri("mongodb://admin:admin@ds161833.mlab.com:61833/express-koder").then(() => {
+    log.info('Connected to DB!');
+}).catch((error) => {
+    log.error(error);
+});

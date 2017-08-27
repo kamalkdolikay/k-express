@@ -1,7 +1,7 @@
 import express from 'express';
 import passport from 'passport';
 const router = express.Router();
-const oauth2 = require('../api/policies/oauth2');
+const oauth2 = require('../api/policies/OAuth2');
 
 //file imports
 import UsersController from '../api/controllers/UsersController';

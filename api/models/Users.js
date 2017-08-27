@@ -6,12 +6,11 @@
  * @email       :: kamaldolikay@gmail.com
  */
 
-var mongoose = require('mongoose'),
-	crypto = require('crypto'),
+const mongoose = require('mongoose');
+const crypto = require('crypto');
+const Schema = mongoose.Schema;
 
-	Schema = mongoose.Schema,
-
-	Users = new Schema({
+const Users = new Schema({
 		username: {
 			type: String,
 			unique: true,
