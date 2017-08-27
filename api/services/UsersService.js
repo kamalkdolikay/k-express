@@ -8,7 +8,7 @@
 
 module.exports = {
 
-    index1: function(req, res) {
+    index1: (req, res) => {
         res.json({"server":"ok"});
     }
 };

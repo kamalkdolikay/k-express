@@ -6,11 +6,11 @@
  * @email       :: kamaldolikay@gmail.com
  */
 
-var UsersService = require('../services/UsersService');
+import UsersService from '../services/UsersService';
 
 module.exports = {
 
-    index: function(req, res) {
+    index: (req, res) => {
         UsersService.index1(req, res);
     }
 };

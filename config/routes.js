@@ -1,7 +1,10 @@
-var express = require('express');
-var router = express.Router();
-var UsersController = require('../api/controllers/UsersController');
+import express from 'express';
+const router = express.Router();
 
+//file imports
+import UsersController from '../api/controllers/UsersController';
+
+//Users Routes
 router.get('/', UsersController.index);
 
 module.exports = router;
