@@ -19,6 +19,11 @@
         "mongoose": "^4.11.8",
         "morgan": "~1.7.0",
         "nconf": "^0.8.4",
+        "oauth2orize": "^1.10.0",
+        "passport": "^0.4.0",
+        "passport-http": "^0.3.0",
+        "passport-http-bearer": "^1.0.1",
+        "passport-oauth2-client-password": "^0.1.2",
         "serve-favicon": "~2.3.2",
         "winston": "^2.3.1"
     },
