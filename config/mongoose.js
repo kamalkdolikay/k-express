@@ -5,7 +5,7 @@ var connections = require('./connections');
 var Promise     = require('bluebird'),
     promisify   = Promise.promisify;
 
-mongoose.connection.openUri(connections.mongoose.database)
+mongoose.connection.openUri("mongodb://localhost/shop")
     .then(function(){
         log.info('Connected to DB!');
     }).catch(function(error){
