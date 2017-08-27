@@ -4,10 +4,14 @@ import favicon from 'serve-favicon';
 import logger from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
+import passport from 'passport';
 
-import routes from './config/routes';
-const log = require('./config/log')(module);
+//file imports
 require('./config/mongoose');
+require('./api/policies/auth');
+// var oauth2 = require('./api/policies/oauth2');
+const log = require('./config/log')(module);
+import routes from './config/routes';
 
 const app = express();
 
@@ -17,9 +21,11 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'assets')));
+app.use(passport.initialize());
 
 app.use('/', routes);
+// app.use('/api/oauth/token', oauth2.token);
 
 // catch 404 and forward to error handler
 app.use((req, res, next) => {
