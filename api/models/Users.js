@@ -6,7 +6,7 @@
  * @email       :: kamaldolikay@gmail.com
  */
 
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 const crypto = require('crypto');
 const Schema = mongoose.Schema;
 

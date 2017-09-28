@@ -3,6 +3,8 @@ import passport from 'passport';
 const router = express.Router();
 const oauth2 = require('../api/policies/OAuth2');
 
+require('../api/models/Users.js');
+
 //file imports
 import UsersController from '../api/controllers/UsersController';
 var guard = passport.authenticate('bearer', { session: false });
@@ -32,5 +34,7 @@ router.get('/api/users/info', guard,
 });
 
 router.post('/api/oauth/token', oauth2.token);
+
+router.post('/lol', UsersController.register);
 
 module.exports = router;
